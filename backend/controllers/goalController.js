@@ -62,7 +62,7 @@ const updateGoal = asyncHandler(async (req, res) => {
 // @route	GET /api/goals/:id
 // @access	Private
 const deleteGoal = asyncHandler(async (req, res) => {
-  const goal = Goal.findById(req.params.id);
+  const goal = await Goal.findById(req.params.id);
 
   if (!goal) {
     res.status(400);
@@ -78,7 +78,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
   }
 
   //check the logged user matches the goal user
-  if (goal.user.toString() !== user.id) {
+  if (goal.user.id.toString() !== user.id) {
     res.status(401);
     throw new Error("User not found!");
   }
